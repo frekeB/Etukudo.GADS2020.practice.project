@@ -1,1 +1,1 @@
-# Etukudo.GADS2020.practice.project
+# Ndifreke Etukudo, GADS2020 project submissions
