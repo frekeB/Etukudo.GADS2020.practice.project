@@ -1,0 +1,77 @@
+ 
+ Lab title: Google cloud Fundamentals: Getting Starte with GKE
+
+ 
+Lab Objective:
+
+# In this lab, you learn how to perform the following tasks:
+
+1) Provision a Kubernetes cluster using Kubernetes Engine.
+
+2) Deploy and manage Docker containers using kubectl.
+
+
+	Steps
+# Login to google cloud console
+
+# Scroll down in the list of enabled APIs, and confirm that both of these APIs are enabled:
+	**Kubernetes Engine API
+	**Container Registry API
+
+if they are not listed, you should enable it by clicking Enable APIs and Services at the top.
+
+
+
+		Task one:
+
+1) Provision a Kubernetes cluster using Kubernetes Engine.
+
+
+#open cloud shell...
+	using the assigned zone, provided by qwiklab.
+ #export MY_ZONE=us-central1-a
+
+Start a Kubernetes cluster managed by Kubernetes Engine.
+	#gcloud container clusters create webfrontend --zone $MY_ZONE --num-nodes 2 (this is configured to run only two labs)
+
+check your installed version of Kubernetes(checks for installed version)
+	#kubectl version
+
+
+		Task two:
+2) Deploy and manage Docker containers using kubectl.
+
+launch a single instance of the nginx
+	#kubectl create deploy nginx --image=nginx:1.17.10
+
+View the pod running the nginx container:
+	#kubectl get pods
+
+
+Expose the nginx container to the Internet:
+#kubectl expose deployment nginx --port 80 --type LoadBalancers
+
+View the new service:
+#kubectl get services
+
+use the display External Ip address to test
+rerun: kubectl get services
+
+Scale up the number of pods running on your service:
+#kubectl scale deployment nginx --replicas 3
+
+Confirm that Kubernetes has updated the number of pods:
+# kubectl get pods
+
+Confirm that your external IP address has not changed:
+#kubectl get services
+
+Return to the web browser tab in which you viewed your cluster's external IP address.
+Refresh the page to confirm that the nginx web server is still responding.
+
+
+
+
+
+
+

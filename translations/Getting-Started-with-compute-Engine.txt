@@ -1,0 +1,83 @@
+ 
+ Lab title: Google cloud Fundamentals: Getting Starte with compute Engine
+
+
+ Lab Objective:
+
+# In this lab, you will learn how to perform the following tasks:
+
+1) Create a Compute Engine virtual machine using the Google Cloud Platform (GCP) Console.
+
+2) Create a Compute Engine virtual machine using the gcloud command-line interface.
+
+3) Connect between the two instances.
+
+##Steps:
+
+ To start login to google console using your credential using:
+ 
+ gcloud auth login [ACCOUNT] [--no-activate] [--brief] [--enable-gdrive-access] [--force] [--no-launch-browser] [--update-adc] [GCLOUD_WIDE_FLAG …]
+
+
+	#Task one:
+
+1) Create a Compute Engine virtual machine using the Google Cloud Platform (GCP) Console.
+
+# List the available compute zones using: 
+
+ gcloud compute zones list | grep us-central1
+ 
+ gcloud compute instances create "my-vm-1" --machine-type "n1-standard-1" --image-project "debian-cloud" --image "debian-9-stretch-v20190213" --subnet "default" tags http.
+ 
+create a firewall rule:
+
+# allow SSH, RDP and ICMP for the given network
+gcloud compute firewall-rules create managementnet-allow-icmp-ssh-rdp --direction=INGRESS --priority=1000 --network=managementnet --action=ALLOW --rules=tcp:22,3389,icmp --source-ranges=0.0.0.0/0
+# allow internal from given source range
+	
+
+	#Task Two:
+
+2) Create a Compute Engine virtual machine using the gcloud command-line interface.
+
+	gcloud config set compute/zone us-central1-b
+	
+	gcloud compute instances create "my-vm-2" \
+	--machine-type "n1-standard-1" \
+	--image-project "debian-cloud" \
+	--image "debian-9-stretch-v20190213" \
+	--subnet "default"
+
+
+	Task Three:
+
+3) Connect between the two instances.
+
+To open a command prompt on the my-vm-2 instance, click SSH in its row in the VM instances list.
+
+Use the ping command to confirm that my-vm-2 can reach my-vm-1 over the network:
+
+#ping my-vm-1
+#Ctrl+C
+#ssh my-vm-1
+
+If you are prompted about whether you want to continue connecting to a host with unknown authenticity, enter yes to confirm that you do.
+
+#sudo apt-get install nginx-light -y
+ (  At the command prompt on my-vm-1)
+
+#sudo nano /var/www/html/index.nginx-debian.html
+below the H1 header, add a text like this:
+
+Hi from YOUR_NAME (where YOUR_NAME is replaced with your name.)
+
+press Ctrl+O and Press Enter key.
+  Exit nano by pressing Ctrl+X 
+
+curl http://localhost/ (to confirm the web server is serving your web page.
+exit my-vm-1 by typing exit.
+
+To confirm that my-vm-2 can reach the web server on my-vm-1,
+ at the command prompt on my-vm-2, execute this command:
+curl http://my-vm-1/
+
